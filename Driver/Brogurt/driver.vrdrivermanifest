@@ -1,0 +1,12 @@
+{
+    "alwaysActivate": false,
+    "name" : "BrogurtVR",
+    "directory" : "",
+    "resourceOnly" : false,
+    "hmd_presence" :
+    [
+        "*.*"
+    ],
+
+    "other_presence" : []
+}
