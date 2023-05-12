@@ -13,7 +13,7 @@
 
 using namespace vr;
 
-class HMDDriver : public ITrackedDeviceServerDriver
+class HMDDriver : public TrackedDeviceServerDriver
 {
     public:
         EVRInitError Activate(uint32_t unObjectId);
