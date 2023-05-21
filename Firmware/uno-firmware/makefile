@@ -1,7 +1,9 @@
 FIRMWARE_NAME = uno-firmware
 MMCU_NAME = atmega328p
 UART_LIB = uart-protocol
-
+SRC_DIR = src
+OBJ_DIR = build/obj
+BIN_DIR = build/bin
 MCU = atmega328p
 
 # Compiler and flags
@@ -9,31 +11,33 @@ CC = avr-gcc
 CFLAGS = -Wall -Os -DF_CPU=16000000UL -mmcu=$(MCU)
 
 # Source files
-SRCS = $(FIRMWARE_NAME)/$(FIRMWARE_NAME).c $(FIRMWARE_NAME)/$(UART_LIB).c
-OBJS = $(SRCS:.c=.o)
+SRCS = $(wildcard $(SRC_DIR)/*.c)
+OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 
 # Include directories
-INCLUDES = -I./$(FIRMWARE_NAME)
+INCLUDES = -I./include
 
-# Rule to build the object files
-%.o: %.c
+# Rule to create the object files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 # Rule to build the final firmware
-firmware.elf: $(OBJS)
-	$(CC) $(CFLAGS) -o $(FIRMWARE_NAME)/$@ $^
+$(BIN_DIR)/firmware.elf: $(OBJS)
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) -o $@ $^
 
 # Rule to generate the HEX file
-firmware.hex: firmware.elf
-	avr-objcopy -O ihex -R .eeprom $(FIRMWARE_NAME)/$< $(FIRMWARE_NAME)/$@
+$(BIN_DIR)/firmware.hex: $(BIN_DIR)/firmware.elf
+	avr-objcopy -O ihex -R .eeprom $< $@
 
 # Rule to upload the firmware to Arduino
-upload: firmware.hex
-	sudo avrdude -F -V -c arduino -p ATMEGA328P -P /dev/ttyACM0 -U flash:w:$(FIRMWARE_NAME)/firmware.hex
+upload: $(BIN_DIR)/firmware.hex
+	sudo avrdude -F -V -c arduino -p ATMEGA328P -P /dev/ttyACM0 -U flash:w:$<
 
 # Rule to clean the build files
 clean:
-	rm -f $(OBJS) firmware.elf firmware.hex
+	rm -rf $(OBJ_DIR)/* $(BIN_DIR)/*
 
 .PHONY: clean
 #default:

@@ -1,8 +1,5 @@
 #include "uart-protocol.h"
-#include <stdio.h>
-//#include <avr/io.h>
-//#include <util/delay.h>
-
+#include "i2c-protocol.h"
 #define I2C_ADDRESS         0x68
 #define I2C_SLAVE_ADDRESS   b1101000
 
@@ -27,25 +24,5 @@ int main(void)
         _delay_ms(500);
     }
 }
-/*
-void startI2CTransmission()
-{
-
-}
 
 
-void sendI2CData(uint8_t data)
-{
-
-}
-
-uint8_t readI2CData()
-{
-    
-}
-
-void stopI2CTransmission()
-{
-
-}
-*/
