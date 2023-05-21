@@ -11,4 +11,5 @@
 void uartInit();
 void uartTransmitChar(unsigned char data);
 unsigned char uartReceiveChar();
+void uartPrint(const unsigned char* string);
 #endif

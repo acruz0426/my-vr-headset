@@ -3,8 +3,8 @@
 
 void uartInit() 
 {
-    UBRR0H = (unsigned char)(7 >> 8);
-    UBRR0L = (unsigned char)(7 & 0xFF);
+    UBRR0H = (unsigned char)(8 >> 8);
+    UBRR0L = (unsigned char)(8 & 0xFF);
 
     // Enable receiver and transmitter
     UCSR0B |= (1 << RXEN0) | (1 << TXEN0);
@@ -19,9 +19,10 @@ void uartTransmitChar(unsigned char data)
     {
         uartTransmitChar('\r', stream);
     }*/
+    //PORTB = PORTB | (1 << PORTB5);
     // Wait for the transmit buffer to be empty
-    while(!(UCSR0A & (1 >> UDRE0)));
-
+    while(!(UCSR0A & (1 << UDRE0)));
+    //PORTB = PORTB & ~(1 << PORTB5);
     // Transmit the data
     UDR0 = data;
 }
@@ -35,4 +36,7 @@ unsigned char uartReceiveChar()
     return UDR0;
 }
 
-
+void uartPrint(const unsigned char* string)
+{
+    while(*string != 0) uartTransmitChar(*string++);
+}
