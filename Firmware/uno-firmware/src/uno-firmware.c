@@ -13,15 +13,20 @@ int main(void)
     // Enable I2C
     DDRB = DDB5 | (1 << DDB5);
     uartInit();
+    I2CInit(16000000, 400000);
     const unsigned char* message = "Hello, Serial Monitor!\n";
     //stdout = &output;
     while(1)
     {
-        PORTB = PORTB5 | (1 << PORTB5);
+        /*PORTB = PORTB5 | (1 << PORTB5);
         uartPrint(message);
         _delay_ms(500);
         PORTB = PORTB5 & ~(1 << PORTB5);
-        _delay_ms(500);
+        _delay_ms(500);*/
+
+        startI2CTransmission();
+        sendI2CData();
+        
     }
 }
 
