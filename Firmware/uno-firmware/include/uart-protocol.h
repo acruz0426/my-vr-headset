@@ -9,7 +9,8 @@
 
 
 void uartInit();
-void uartTransmitChar(unsigned char data);
-unsigned char uartReceiveChar();
-void uartPrint(const unsigned char* string);
+void uartTransmitChar(char data);
+char uartReceiveChar();
+void uartPrint(const char* string);
+void uartPrintln(char* string);
 #endif

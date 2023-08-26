@@ -1,4 +1,5 @@
 #include "uart-protocol.h"
+#include <string.h>
 
 
 void uartInit() 
@@ -13,7 +14,7 @@ void uartInit()
 }
 
 
-void uartTransmitChar(unsigned char data)
+void uartTransmitChar(char data)
 {
     /*if (data == '\n')
     {
@@ -27,7 +28,7 @@ void uartTransmitChar(unsigned char data)
     UDR0 = data;
 }
 
-unsigned char uartReceiveChar()
+char uartReceiveChar()
 {
     // Wait for data to be available
     while (!(UCSR0A & (1 << RXC0)));
@@ -36,7 +37,13 @@ unsigned char uartReceiveChar()
     return UDR0;
 }
 
-void uartPrint(const unsigned char* string)
+void uartPrint(const char* string)
 {
     while(*string != 0) uartTransmitChar(*string++);
+}
+
+void uartPrintln(char* string)
+{
+    strcat(string, "\n");
+    uartPrint(string);
 }

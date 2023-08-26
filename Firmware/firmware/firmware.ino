@@ -1,8 +1,7 @@
 #include "Wire.h"
 #include "I2C.h"
 
-#include "Wire.h"
-#include "I2C.h"
+#include "MPU9250.h"
 
 #define MPU9250_IMU_ADDRESS 0x68
 #define MPU9250_MAG_ADDRESS 0x0C
@@ -64,7 +63,7 @@ void setup()
   I2CwriteByte(MPU9250_IMU_ADDRESS, 55, 0x02); // Set by pass mode for the magnetometers
   I2CwriteByte(MPU9250_IMU_ADDRESS, 56, 0x01); // Enable interrupt pin for raw data
 
-  setMagnetometerAdjustmentValues();
+  //setMagnetometerAdjustmentValues();
 
   //Start magnetometer
   I2CwriteByte(MPU9250_MAG_ADDRESS, 0x0A, 0x12); // Request continuous magnetometer measurements in 16 bits (mode 1)
