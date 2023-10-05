@@ -1,6 +1,6 @@
 #include "uart-protocol.h"
 #include <string.h>
-
+#include <stdio.h>
 
 void uartInit() 
 {
@@ -14,7 +14,7 @@ void uartInit()
 }
 
 
-void uartTransmitChar(char data)
+void uartTransmitChar(uint8_t data)
 {
     /*if (data == '\n')
     {
@@ -46,4 +46,12 @@ void uartPrintln(char* string)
 {
     strcat(string, "\n");
     uartPrint(string);
+}
+
+
+int uart_putchar_printf(char var, FILE *STREAM)
+{
+    if (var == '\n') uartTransmitChar('\r');
+    uartTransmitChar(var);
+    return 0;
 }

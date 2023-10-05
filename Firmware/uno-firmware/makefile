@@ -8,7 +8,7 @@ MCU = atmega328p
 
 # Compiler and flags
 CC = avr-gcc
-CFLAGS = -Wall -Os -DF_CPU=16000000UL -mmcu=$(MCU)
+CFLAGS = -Wall -Os -DF_CPU=16000000UL -mmcu=$(MCU) -u,vfprintf,
 
 # Source files
 SRCS = $(wildcard $(SRC_DIR)/*.c)

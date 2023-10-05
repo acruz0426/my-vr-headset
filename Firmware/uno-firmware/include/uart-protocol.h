@@ -9,8 +9,9 @@
 
 
 void uartInit();
-void uartTransmitChar(char data);
+void uartTransmitChar(uint8_t data);
 char uartReceiveChar();
 void uartPrint(const char* string);
 void uartPrintln(char* string);
+int uart_putchar_printf(char var, FILE *stream);
 #endif
